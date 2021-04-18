@@ -9,29 +9,29 @@ class Song
   end
 
   def save
-    self.class.all << self
+    @@all << self 
   end
 
   def self.create
-    @@all << self.new
+    self.new.save
     @@all[-1]
   end
 
-  def self.new_by_name(name)
+  def self.new_by_name(name_string)
     song = self.new
-    song.name = name
+    song.name = name_string
     song
   end
 
-  def self.create_by_name(name)
+  def self.create_by_name(name_string)
     #returns a song instance with the name set to the name preperty. Saves the song.
     song = self.create
-    song.name = name
+    song.name = name_string
     song
   end
 
-  def self.find_by_name(name)
-    self.all.find {|song| name == song.name}
+  def self.find_by_name(name_string)
+    self.all.detect {|song| name_string == song.name}
     
   end
 
@@ -44,6 +44,7 @@ class Song
   end
 
   def self.new_from_filename(file_name)
+    binding.pry
     song_info = file_name.split(" - ")
     artist = song_info[0]
     song_mp3 = song_info[1]
